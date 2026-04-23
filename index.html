@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>GraceGate — Check In</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
@@ -58,20 +58,20 @@
       opacity: 0.25;
     }
     .orb-1 {
-      width: 600px; height: 600px;
+      width: 60vw; height: 60vw;
       background: radial-gradient(circle, #1a4fa8, transparent);
       top: -150px; left: -150px;
       animation-duration: 18s;
     }
     .orb-2 {
-      width: 500px; height: 500px;
+      width: 50vw; height: 50vw;
       background: radial-gradient(circle, #5b21b6, transparent);
       bottom: -100px; right: -100px;
       animation-duration: 22s;
       animation-delay: -8s;
     }
     .orb-3 {
-      width: 350px; height: 350px;
+      width: 35vw; height: 35vw;
       background: radial-gradient(circle, #0284c7, transparent);
       top: 35%; left: 25%;
       animation-duration: 13s;
@@ -86,7 +86,7 @@
     /* Logo */
     .logo-wrap {
       position: relative;
-      margin-bottom: 40px;
+      margin-bottom: clamp(20px, 4vh, 48px);
       animation: float 4s ease-in-out infinite;
     }
     @keyframes float {
@@ -105,8 +105,8 @@
       50%       { transform: scale(1.25); opacity: 1; }
     }
     .logo-img {
-      width: 120px;
-      height: 120px;
+      width: clamp(80px, 12vw, 150px);
+      height: clamp(80px, 12vw, 150px);
       border-radius: 50%;
       display: block;
       position: relative;
@@ -129,13 +129,13 @@
       text-transform: uppercase;
       color: rgba(255,255,255,0.35);
       text-align: center;
-      margin-bottom: 56px;
+      margin-bottom: clamp(24px, 5vh, 64px);
     }
 
     /* Divider */
     .divider {
       width: 1px;
-      height: 40px;
+      height: clamp(24px, 4vh, 48px);
       background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
       margin: 0 auto 48px;
     }
@@ -154,7 +154,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 16px 36px;
+      padding: clamp(12px, 2vh, 20px) clamp(24px, 4vw, 48px);
       border-radius: 60px;
       border: none;
       font-family: 'Georgia', serif;
@@ -191,6 +191,36 @@
       transform: translateY(-2px);
     }
 
+    /* Floating home button */
+    #home-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Georgia', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 60px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.2s, color 0.2s;
+      display: none;
+    }
+    #home-btn.visible {
+      display: block;
+    }
+    #home-btn:active {
+      background: rgba(255,255,255,0.25);
+      color: #ffffff;
+    }
+
     /* Burn-in prevention — slow content drift */
     .ss-content {
       display: flex;
@@ -212,10 +242,10 @@
     /* QR Codes */
     .qr-row {
       display: flex;
-      gap: 80px;
+      gap: clamp(32px, 8vw, 100px);
       align-items: center;
       justify-content: center;
-      margin-top: 72px;
+      margin-top: clamp(32px, 6vh, 80px);
     }
     .qr-item {
       display: flex;
@@ -224,8 +254,8 @@
       gap: 12px;
     }
     .qr-box {
-      width: 180px;
-      height: 180px;
+      width: clamp(120px, 16vw, 200px);
+      height: clamp(120px, 16vw, 200px);
       background: white;
       border-radius: 12px;
       padding: 10px;
@@ -234,8 +264,8 @@
       justify-content: center;
     }
     .qr-box canvas, .qr-box img {
-      width: 160px !important;
-      height: 160px !important;
+      width: calc(clamp(120px, 16vw, 200px) - 20px) !important;
+      height: calc(clamp(120px, 16vw, 200px) - 20px) !important;
     }
     .qr-label {
       font-size: 0.65rem;
@@ -272,6 +302,9 @@
     allow="camera; microphone"
     title="GraceGate Check-In Form"
   ></iframe>
+
+  <!-- Floating home button -->
+  <button id="home-btn">⌂ Home</button>
 
   <!-- Screensaver -->
   <div id="screensaver">
@@ -320,11 +353,13 @@
 
     function showScreensaver() {
       screensaver.classList.add('visible');
+      homeBtn.classList.remove('visible');
     }
 
     function loadCheckin() {
       frame.src = 'https://gracegatechurch.churchcenter.com/people/forms/410278';
       screensaver.classList.remove('visible');
+      homeBtn.classList.add('visible');
       resetTimer();
     }
 
@@ -347,6 +382,14 @@
       document.addEventListener(evt, () => {
         if (!screensaver.classList.contains('visible')) resetTimer();
       }, { passive: true });
+    });
+
+    // Home button
+    const homeBtn = document.getElementById('home-btn');
+    homeBtn.addEventListener('pointerup', function(e) {
+      e.preventDefault();
+      showScreensaver();
+      homeBtn.classList.remove('visible');
     });
 
     // Generate QR codes

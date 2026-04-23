@@ -238,8 +238,8 @@
       <button class="btn btn-primary" id="btn-checkin">
         ✦ Check In
       </button>
-      <button class="btn btn-secondary" id="btn-website">
-        Visit Website
+      <button class="btn btn-secondary" id="btn-linktree">
+        More Info
       </button>
     </div>
 
@@ -264,8 +264,8 @@
       resetTimer();
     }
 
-    function loadWebsite() {
-      frame.src = 'https://www.gracegate.org.nz/';
+    function loadLinktree() {
+      frame.src = 'https://linktr.ee/gracegate';
       screensaver.classList.remove('visible');
       resetTimer();
     }
@@ -275,11 +275,20 @@
       idleTimer = setTimeout(showScreensaver, IDLE_MS);
     }
 
-    btnCheckin.addEventListener('click', loadCheckin);
-    btnCheckin.addEventListener('touchstart', loadCheckin, { passive: true });
+    function handleTouch(fn) {
+      return function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        fn();
+      };
+    }
 
-    btnWebsite.addEventListener('click', loadWebsite);
-    btnWebsite.addEventListener('touchstart', loadWebsite, { passive: true });
+    btnCheckin.addEventListener('touchend', handleTouch(loadCheckin), { passive: false });
+    btnCheckin.addEventListener('click', loadCheckin);
+
+    const btnLinktree = document.getElementById('btn-linktree');
+    btnLinktree.addEventListener('touchend', handleTouch(loadLinktree), { passive: false });
+    btnLinktree.addEventListener('click', loadLinktree);
 
     // Reset timer on any user interaction with the page
     ['touchstart', 'touchmove', 'mousedown', 'mousemove', 'keydown', 'scroll'].forEach(evt => {
@@ -288,8 +297,8 @@
       }, { passive: true });
     });
 
-    // Start on check-in form by default
-    resetTimer();
+    // Show screensaver immediately on load
+    showScreensaver();
   </script>
 
 </body>

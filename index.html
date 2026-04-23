@@ -236,10 +236,7 @@
 
     <div class="btn-row">
       <button class="btn btn-primary" id="btn-checkin">
-        ✦ Check In
-      </button>
-      <button class="btn btn-secondary" id="btn-linktree">
-        More Info
+        ✦ Sign Up
       </button>
     </div>
 
@@ -264,11 +261,7 @@
       resetTimer();
     }
 
-    function loadLinktree() {
-      frame.src = 'https://linktr.ee/gracegate';
-      screensaver.classList.remove('visible');
-      resetTimer();
-    }
+
 
     function resetTimer() {
       clearTimeout(idleTimer);
@@ -286,9 +279,7 @@
     btnCheckin.addEventListener('touchend', handleTouch(loadCheckin), { passive: false });
     btnCheckin.addEventListener('click', loadCheckin);
 
-    const btnLinktree = document.getElementById('btn-linktree');
-    btnLinktree.addEventListener('touchend', handleTouch(loadLinktree), { passive: false });
-    btnLinktree.addEventListener('click', loadLinktree);
+
 
     // Reset timer on any user interaction with the page
     ['touchstart', 'touchmove', 'mousedown', 'mousemove', 'keydown', 'scroll'].forEach(evt => {

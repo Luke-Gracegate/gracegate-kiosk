@@ -194,9 +194,8 @@
     /* Floating home button */
     #home-btn {
       position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 20px;
+      left: 20px;
       z-index: 50;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.25);
@@ -242,10 +241,12 @@
     /* QR Codes */
     .qr-row {
       display: flex;
-      gap: clamp(32px, 8vw, 100px);
+      gap: clamp(16px, 6vw, 100px);
       align-items: center;
       justify-content: center;
-      margin-top: clamp(32px, 6vh, 80px);
+      margin-top: clamp(24px, 4vh, 80px);
+      flex-wrap: wrap;
+      padding: 0 16px;
     }
     .qr-item {
       display: flex;
@@ -254,21 +255,21 @@
       gap: 12px;
     }
     .qr-box {
-      width: clamp(120px, 16vw, 200px);
-      height: clamp(120px, 16vw, 200px);
+      width: clamp(90px, 18vmin, 200px);
+      height: clamp(90px, 18vmin, 200px);
       background: white;
       border-radius: 12px;
-      padding: 10px;
+      padding: clamp(6px, 1vmin, 12px);
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .qr-box canvas, .qr-box img {
-      width: calc(clamp(120px, 16vw, 200px) - 20px) !important;
-      height: calc(clamp(120px, 16vw, 200px) - 20px) !important;
+      width: calc(clamp(90px, 18vmin, 200px) - clamp(12px, 2vmin, 24px)) !important;
+      height: calc(clamp(90px, 18vmin, 200px) - clamp(12px, 2vmin, 24px)) !important;
     }
     .qr-label {
-      font-size: 0.65rem;
+      font-size: clamp(0.55rem, 1.5vmin, 0.75rem);
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.4);

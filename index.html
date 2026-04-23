@@ -350,6 +350,12 @@
     const screensaver = document.getElementById('screensaver');
     const frame = document.getElementById('form-frame');
     const btnCheckin = document.getElementById('btn-checkin');
+    const homeBtn = document.getElementById('home-btn');
+
+    homeBtn.addEventListener('pointerup', function(e) {
+      e.preventDefault();
+      showScreensaver();
+    });
     const btnWebsite = document.getElementById('btn-website');
 
     function showScreensaver() {
@@ -383,14 +389,6 @@
       document.addEventListener(evt, () => {
         if (!screensaver.classList.contains('visible')) resetTimer();
       }, { passive: true });
-    });
-
-    // Home button
-    const homeBtn = document.getElementById('home-btn');
-    homeBtn.addEventListener('pointerup', function(e) {
-      e.preventDefault();
-      showScreensaver();
-      homeBtn.classList.remove('visible');
     });
 
     // Generate QR codes
